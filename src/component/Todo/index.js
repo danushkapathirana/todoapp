@@ -31,6 +31,11 @@ class Todo extends React.Component {
         this.setState({ todoItems: existingTodoItems }) //when the state value changed component always re-rendered
     }
 
+    deleteTodoItem = (targetItem) => {
+        const updateTodoList = this.state.todoItems.filter(item => item.id !== targetItem.id)
+        this.setState({ todoItems: updateTodoList })
+    }
+
     render(){
         return(
             <div className="todo-app">
@@ -45,7 +50,7 @@ class Todo extends React.Component {
                     </div>
                     <div className="todo-list">
                         {
-                            this.state.todoItems.map((item, index) => <li className="todo-item">{item.value}<button>&#1005</button></li>)
+                            this.state.todoItems.map((item, index) => <li className="todo-item">{item.value}<button onClick={() => this.deleteTodoItem(item)}>&#10005;</button></li>)
                         }
                     </div>
                 </div>
