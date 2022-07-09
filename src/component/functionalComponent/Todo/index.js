@@ -5,17 +5,31 @@ function Todo() {
     const [inputValue, setInputValue] = useState("")
     const [todoItems, setTodoItems] = useState([])
 
+// useEffect(() => {}, []) componentDidMount()
+// useEffect(() => {}) componentDidUpdate()
+
     const handleInputOnChange = (event) => {
         const value = event.target.value
         setInputValue(value)
     }
 
-    const storeTodoItem = () => { 
+    const storeTodoItemDB = (itemToStore) => { //local storage only store primitive type data only
+        localStorage.setItem("Todo State: ", JSON.stringify(itemToStore))
+    }
+
+    const storeTodoItem = () => {
+        const checkDuplication = todoItems.find(item => item.value === inputValue) //check duplication
+        if(checkDuplication) {
+            return alert("Duplication not allow")
+        }
+
         const existingTodoItems = [...todoItems]
         existingTodoItems.push({
             id: todoItems.length + 1,
             value: inputValue
         })
+
+        storeTodoItemDB(existingTodoItems)
         setTodoItems(existingTodoItems)
     }
 
@@ -37,7 +51,7 @@ function Todo() {
             </div>
             <div className="todo-list">
                 {
-                    todoItems.map((item, index) => <li className="todo-item">{item.value}<button onClick={() => deleteTodoItem(item)}>&#10005;</button></li>)
+                    todoItems.map((item, index) => <li className="todo-item" key={item.id}>{item.value}<button onClick={() => deleteTodoItem(item)}>&#10005;</button></li>)
                 }
             </div>
         </div>
