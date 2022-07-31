@@ -1,12 +1,35 @@
 import React from "react";
-import { useState } from "react"; //hooks introduce after 16.8 version
+import { useState, useEffect } from "react"; //hooks introduce after 16.8 version
 
-function Todo() {
-    const [inputValue, setInputValue] = useState("")
+var counter = 0
+function Todo(props) {
+    const [inputValue, setInputValue] = useState("") //hook
     const [todoItems, setTodoItems] = useState([])
 
-// useEffect(() => {}, []) componentDidMount()
-// useEffect(() => {}) componentDidUpdate()
+    // useEffect(() => { hook ; componentDidMount() ; difference: empty dependencies
+    // }, [])
+
+    // useEffect(() => { componentDidUpdate() ; called: when mounting phase and state changes happen
+    // })
+
+    // useEffect(() => { componentWillUnmount ; difference: there is a return function which executes when component will unmount
+    //     return() => {}
+    // })
+
+    useEffect(() => {
+        if(typeof props.onLoadCallback === 'function'){
+            props.onLoadCallback("Child component mounted successfully")
+        }
+
+        const intervalId = setInterval(() => {
+            console.log("Count", ++counter);
+        }, 1000)
+
+        return() => { //componentWillUnmount or else clear the sideEffect
+            console.log("Child component unmounted successfully")
+            clearInterval(intervalId)
+        }
+    }, []) //componentDidMount
 
     const handleInputOnChange = (event) => {
         const value = event.target.value

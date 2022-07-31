@@ -4,7 +4,7 @@ class Todo extends React.Component {
     constructor(props){
         super(props) //
 
-        this.state = {
+        this.state = { //state -> it is an object which holds private data related to that class
             inputValue: '',
             todoItems: []
         }
