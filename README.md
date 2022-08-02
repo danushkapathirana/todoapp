@@ -1,3 +1,3 @@
 # Todo App
 
-Todo App using React Js
+Todo app using React Js
