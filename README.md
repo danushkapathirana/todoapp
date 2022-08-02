@@ -1,3 +1,3 @@
-# todo-app
+# Todo App
 
-todo-app using react js
+Todo App using React Js
